@@ -28,6 +28,7 @@ class A {
 				System.out.print(arry[x] + ",");
 			else
 				System.out.print(arry[x]);
+			//这是一个数组
 		}
 }
 
