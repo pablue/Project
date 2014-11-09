@@ -27,9 +27,9 @@ public class JxlImport {
 
 		// 得到表中所有的数据
 		System.out.println(sheet.getRows());
+		List<Person> list = new ArrayList<>();
 		for (int i = 0; i < sheet.getRows(); i++) {
 			Cell[] row = sheet.getRow(i);
-			List<Person> list = new ArrayList<>();
 				Person p = new Person(row[0].getContents(),
 						row[1].getContents(), row[2].getContents(),
 						row[3].getContents(), row[4].getContents());
@@ -38,10 +38,10 @@ public class JxlImport {
 //				p.setName(row[2].getContents());
 //				p.setPassword(row[3].getContents());
 //				p.setSex(row[4].getContents());
-				list.add(p);
-				System.out.println(list);
 			
+				list.add(p);
 		}
+		System.out.println(list);
 
 		// //得到第一行的数据
 		// Cell[] row = sheet.getRow(0);
