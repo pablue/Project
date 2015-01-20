@@ -11,7 +11,7 @@ public class PropertiesConfig {
 		
 		//创建一个Properties
 		Properties pro = new Properties();
-		//装载一个六对象
+		//装载一个流对象
 		try {
 			pro.load(inStream);
 		} catch (IOException e) {

@@ -1,117 +1,142 @@
 package cn.interteach.weather;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader; 
+import java.io.FileNotFoundException; 
+import java.io.IOException; 
+import java.io.InputStreamReader; 
+import java.net.SocketTimeoutException; 
+import java.net.URL; 
+import java.net.URLConnection; 
  
-import net.sf.json.JSONObject;
-/**
-020
- * 得到未来6天的天气(含今天)
-021
- * @author Chewl
-022
- *
-023
- */
-public class Weather {
-    String Ctiyid;
-    URLConnection connectionData;
-    StringBuilder sb;
-    BufferedReader br;// 读取data数据流
-    JSONObject jsonData;
-    JSONObject info;
-    public Weather(String Cityid) throws IOException ,NullPointerException{
-        // 解析本机ip地址
+import net.sf.json.JSONObject; 
+ 
+public class Weather { 
+    String Ctiyid; 
+    URLConnection connectionData; 
+    StringBuilder sb; 
+    BufferedReader br;// 读取data数据流 
+    JSONObject jsonData; 
+    JSONObject info; 
+     
+    //从天气网解析的参数 
+    String city ;// 城市 
+    String date_y;//日期 
+    String week ;// 星期 
+    String fchh ;// 发布时间 
+     
+    String weather1 ;// 未来1到6天天气情况 
+    String weather2 ; 
+    String weather3 ; 
+    String weather4 ; 
+    String weather5 ; 
+    String weather6 ; 
+     
+    String wind1;//未来1到6天风况 
+    String wind2; 
+    String wind3; 
+    String wind4; 
+    String wind5; 
+    String wind6; 
+     
+    String fl1;//风的等级 
+    String fl2; 
+    String fl3; 
+    String fl4; 
+    String fl5; 
+    String fl6; 
+     
+     
+    String temp1 ;// 未来1到6天的气温 
+    String temp2 ; 
+    String temp3 ; 
+    String temp4 ; 
+    String temp5 ; 
+    String temp6 ; 
+     
+    String index;// 今天的穿衣指数 
+    String index_uv ;// 紫外指数 
+    String index_tr ;// 旅游指数 
+    String index_co ;// 舒适指数 
+    String index_cl ;// 晨练指数 
+    String index_xc;//洗车指数 
+    String index_d;//天气详细穿衣指数 
+     
   
-        this.Ctiyid = Cityid;
-        // 连接中央气象台的API
-        URL url = new URL("http://m.weather.com.cn/data/" + Ctiyid + ".html");
-        connectionData = url.openConnection();
-        connectionData.setConnectTimeout(1000);
-        try {
-            br = new BufferedReader(new InputStreamReader(
-                    connectionData.getInputStream(), "UTF-8"));
-            sb = new StringBuilder();
-            String line = null;
-            while ((line = br.readLine()) != null)
-                sb.append(line);
-        } catch (SocketTimeoutException e) {
-            System.out.println("连接超时");
-        } catch (FileNotFoundException e) {
-            System.out.println("加载文件出错");
-        }
-            String datas = sb.toString();  
-             
-           jsonData = JSONObject.fromObject(datas);
-          //  System.out.println(jsonData.toString()); 
-           info = jsonData.getJSONObject("weatherinfo");
-         
-        //得到1到6天的天气情况
-        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-        for(int i=1;i<=6;i++){
-            //得到未来6天的日期
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DAY_OF_YEAR, i-1);
-            Date date = cal.getTime();
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
-             
-            Map<String,Object> map = new HashMap<String, Object>();
-            map.put("city", info.getString("city").toString());//城市
-            map.put("date_y", sf.format(date));//日期
-            map.put("week", getWeek(cal.get(Calendar.DAY_OF_WEEK)));//星期
-            map.put("fchh", info.getString("fchh").toString());//发布时间
-            map.put("weather", info.getString("weather"+i).toString());//天气
-            map.put("temp", info.getString("temp"+i).toString());//温度
-            map.put("wind", info.getString("wind"+i).toString());//风况
-            map.put("fl", info.getString("fl"+i).toString());//风速
-            map.put("index", info.getString("index").toString());// 今天的穿衣指数
-            map.put("index_uv", info.getString("index_uv").toString());// 紫外指数
-            map.put("index_tr", info.getString("index_tr").toString());// 旅游指数
-            map.put("index_co", info.getString("index_co").toString());// 舒适指数
-            map.put("index_cl", info.getString("index_cl").toString());// 晨练指数
-            map.put("index_xc", info.getString("index_xc").toString());//洗车指数
-            map.put("index_d", info.getString("index_d").toString());//天气详细穿衣指数
-            list.add(map);
-        }
-        //控制台打印出天气
-       for(int j=0;j<list.size();j++){
-           Map<String,Object> wMap = list.get(j);
-           System.out.println(wMap.get("city")+"\t"+wMap.get("date_y")+"\t"+wMap.get("week")+"\t"
-                   +wMap.get("weather")+"\t"+wMap.get("temp")+"\t"+wMap.get("index_uv"));
-       }
-    }
-    private String getWeek(int iw){
-        String weekStr = "";
-        switch (iw) {
-        case 1:weekStr = "星期天";break;
-        case 2:weekStr = "星期一";break;
-        case 3:weekStr = "星期二";break;
-        case 4:weekStr = "星期三";break;
-        case 5:weekStr = "星期四";break;
-        case 6:weekStr = "星期五";break;
-        case 7:weekStr = "星期六";break;
-        default:
-            break;
-        }
-        return weekStr;
-    }
-    public static void main(String[] args) {
-        try {
-            new Weather("101010100"); // 101010100(北京)就是你的城市代码
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+     
+    public Weather(String Cityid) throws IOException ,NullPointerException{ 
+        // 解析本机ip地址 
+ 
+        this.Ctiyid = Cityid; 
+        // 连接中央气象台的API 
+        URL url = new URL("http://api.k780.com:88/?app=weather.future&weaid=1&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json"); 
+         URLConnection connection = url.openConnection(); 
+            br = new BufferedReader(new InputStreamReader( 
+            		connection.getInputStream())); 
+            sb = new StringBuilder(); 
+            String line ; 
+            while ((line = br.readLine()) != null) {
+            	System.out.println(line);
+            	sb.append(line);
+            }
+            String datas = sb.toString();   
+            
+           jsonData = JSONObject.fromObject(datas); 
+          //  System.out.println(jsonData.toString());  
+           info = jsonData.getJSONObject("weatherinfo"); 
+          
+        city = info.getString("city").toString(); 
+        System.out.println(city);
+        week =  info.getString("week").toString(); 
+        date_y = info.getString("date_y").toString(); 
+        fchh = info.getString("fchh").toString(); 
+        //1到6天的天气 
+        weather1 =  info.getString("weather1").toString(); 
+        System.out.println(weather1);
+        weather2 =  info.getString("weather2").toString(); 
+        weather3 =  info.getString("weather3").toString(); 
+        weather4 =  info.getString("weather4").toString(); 
+        weather5 =  info.getString("weather5").toString(); 
+        weather6 =  info.getString("weather6").toString(); 
+        //1到6天的气温 
+        temp1 = info.getString("temp1").toString(); 
+        temp2 = info.getString("temp2").toString(); 
+        temp3 = info.getString("temp3").toString(); 
+        temp4 = info.getString("temp4").toString(); 
+        temp5 = info.getString("temp5").toString(); 
+        temp6 = info.getString("temp6").toString(); 
+        //1到6天的风况 
+        wind1 = info.getString("wind1").toString(); 
+        wind2 = info.getString("wind2").toString(); 
+        wind3 = info.getString("wind3").toString(); 
+        wind4 = info.getString("wind4").toString(); 
+        wind5 = info.getString("wind5").toString(); 
+        wind6 = info.getString("wind6").toString(); 
+        //1到6天的风速 
+        fl1 = info.getString("fl1").toString(); 
+        fl2 = info.getString("fl2").toString(); 
+        fl3 = info.getString("fl3").toString(); 
+        fl4 = info.getString("fl4").toString(); 
+        fl5 = info.getString("fl5").toString(); 
+        fl6 = info.getString("fl6").toString(); 
+        //各种天气指数 
+        index = info.getString("index").toString(); 
+        index_uv = info.getString("index_uv").toString(); 
+        index_tr = info.getString("index_tr").toString(); 
+        index_co= info.getString("index_co").toString(); 
+        index_cl = info.getString("index_cl").toString(); 
+        index_xc = info.getString("index_xc").toString(); 
+        index_d =  info.getString("index_d").toString(); 
+ 
+    } 
+    public static void main(String[] args) { 
+        try { 
+            new Weather("101270803"); // 101270803就是你的城市代码
+        } catch (NullPointerException e) { 
+            // TODO Auto-generated catch block 
+            e.printStackTrace(); 
+        } catch (IOException e) { 
+            // TODO Auto-generated catch block 
+            e.printStackTrace(); 
+        } 
+    } 
 }
