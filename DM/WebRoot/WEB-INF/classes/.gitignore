@@ -1,0 +1,6 @@
+/applicationContext-db.xml
+/applicationContext.xml
+/cn/
+/hibernate.cfg.xml
+/struts.xml
+/messageResource_zh_CN.properties
