@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validation;
 
 import cn.edu.xyc.dm.model.Teacher;
+import cn.edu.xyc.dm.service.CourseService;
 import cn.edu.xyc.dm.service.TeacherService;
 import cn.edu.xyc.util.MD5;
 
@@ -25,7 +26,6 @@ public class LoginAction extends ActionSupport {
 	private String username;
 	private String password;
 	private String rand;
-	private int flat = 0;
 
 	
 	/**
@@ -64,12 +64,14 @@ public class LoginAction extends ActionSupport {
 	 * @Description:  对已经登录的用户进行注销操作
 	 * @return: void
 	 */
-	public void logout(){
+	public String logout(){
 		HttpSession session = ServletActionContext.getRequest().getSession();
 		session.removeAttribute("teacher");
 		session.invalidate();
+		return "logout";
 	}
-
+	
+	
 	public String getUsername() {
 		return username;
 	}

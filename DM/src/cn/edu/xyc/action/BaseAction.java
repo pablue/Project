@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 
 import javax.annotation.Resource;
 
+import cn.edu.xyc.dm.service.CourseService;
 import cn.edu.xyc.dm.service.TeacherService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,11 +33,13 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		// TODO Auto-generated method stub
 		return this.t;
 	}
-	
+
 	// =============== Service实例的声明 ==================
 
 	// 调用Service层的方法
 	@Resource(name = "teacherService")
 	protected TeacherService teacherService;
 
+	@Resource(name = "courseService")
+	protected CourseService courseService;
 }

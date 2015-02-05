@@ -17,7 +17,7 @@ String basepath = request.getContextPath();
 	<link rel="stylesheet" href="<%=basepath%>/css/main.css" type="text/css" media="screen, projection" /> <!-- main stylesheet -->
 	<link rel="stylesheet" type="text/css" media="all" href="<%=basepath%>/css/tipsy.css" /> 
 
-<script type="text/javascript" src="<%=basepath%>/js/jquery-1.7.2.min.js"></script> <!-- uiToTop implementation -->
+<script type="text/javascript" src="<%=basepath%>/js/jquery-1.11.1.js"></script> <!-- uiToTop implementation -->
 <script type="text/javascript" src="<%=basepath%>/js/custom-scripts.js"></script>
 <script type="text/javascript" src="<%=basepath%>/js/jquery.tipsy.js"></script> <!-- Tipsy -->
 

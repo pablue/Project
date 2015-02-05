@@ -32,7 +32,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<s:form cssClass="form-horizontal templatemo-login-form-2"
-				role="form" action="login_login" method="post">
+				role="form" action="login_login.action" method="post">
 				<div class="row">
 					<div class="col-md-12">
 						<h1>WelCome Login</h1>
@@ -91,16 +91,6 @@
 					</div>
 				</div>
 			</s:form>
-			<s:if test="hasFieldErrors()">
-	<cms:msgdialog basepath="<%=basepath%>">
-		<s:fielderror/>
-	</cms:msgdialog>
-</s:if>
-<s:if test="hasActionMessages()">
-	<cms:msgdialog basepath="<%=basepath%>">
-		<s:actionmessage/>
-	</cms:msgdialog>
-</s:if>
 		</div>
 	</div>
 </body>

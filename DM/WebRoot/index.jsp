@@ -35,6 +35,8 @@
 	</div>
 	<!--以上代码修改完以后可直接复制并粘贴到你的网页上！-->
 	
+	<a href="course_getcoursebytid.action">根据教师ID</a>
+	
 	
 	对不起，你不有登陆
 

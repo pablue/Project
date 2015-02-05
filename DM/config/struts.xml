@@ -19,13 +19,17 @@
 
 
 
-	<package name="dm" extends="struts-default">
+	<package name="dm" extends="struts-default" namespace="/">
 		<action name="login_*" class="loginAction" method="{1}">
 			<result name="input">{1}.jsp</result>
-			<result type="redirect" name="success">/index.jsp</result>
+			<result type="redirect" name="success">/main.jsp</result>
 			<result type="redirect" name="error">/{1}.jsp </result>
+			<result type="redirect" name="logout">login.jsp</result>
 		</action>
 
+		<action name="course_*" class="courseAction" method="{1}">
+			<result name="getid">/aa.jsp</result>
+		</action>
 
 	</package>
 
